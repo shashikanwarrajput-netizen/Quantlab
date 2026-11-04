@@ -83,6 +83,8 @@ export interface AIChatOptions {
   apiKey?: string;
   provider?: string;
   history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+  includeBacktest?: boolean;
+  latestAnalytics?: QuantAlgorithmResult | null;
 }
 
 export interface AIChatResponse {
@@ -308,7 +310,11 @@ export const marketDataService = {
     const symbol = opts.symbol || 'RELIANCE';
     const saved = getSavedAnalytics();
     const cleanSym = symbol.split(':')[0].trim().toUpperCase();
-    const matchingRun = saved.find((item) => item.symbol.toUpperCase() === cleanSym) || saved[0];
+    const matchingRun = opts.includeBacktest === false
+      ? null
+      : (opts.latestAnalytics !== undefined
+          ? opts.latestAnalytics
+          : (saved.find((item) => item.symbol.toUpperCase() === cleanSym) || saved[0]));
 
     // Read client-stored API key if any
     const userKey = getActiveUserKey();
