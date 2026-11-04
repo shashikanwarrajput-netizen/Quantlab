@@ -55,9 +55,18 @@ BACKEND_PID=$!
 (cd frontend && npm run dev -- --host 127.0.0.1 --port 5173) &
 FRONTEND_PID=$!
 
+# 6. Open in default browser
+sleep 3
+if which xdg-open > /dev/null 2>&1; then
+    xdg-open http://127.0.0.1:5173 &
+elif which open > /dev/null 2>&1; then
+    open http://127.0.0.1:5173 &
+fi
+
 echo "QuantLab running at:"
 echo " - Frontend: http://127.0.0.1:5173"
 echo " - Backend:  http://127.0.0.1:8000"
 
 trap "kill $BACKEND_PID $FRONTEND_PID 2>/dev/null" EXIT
 wait
+

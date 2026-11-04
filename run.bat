@@ -81,6 +81,11 @@ start "QuantLab Backend (FastAPI)" cmd /k "cd /d "%~dp0" && if exist .venv\Scrip
 echo [*] Launching Vite Frontend on port 5173...
 start "QuantLab Frontend (Vite)" cmd /k "cd /d "%~dp0\frontend" && call npm.cmd run dev -- --host 127.0.0.1 --port 5173"
 
+:: 6. Open in default browser
+echo [*] Opening QuantLab in default browser...
+timeout /t 3 /nobreak >nul
+start http://127.0.0.1:5173
+
 echo.
 echo ===================================================
 echo  QuantLab is now live!

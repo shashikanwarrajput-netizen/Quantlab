@@ -93,7 +93,35 @@ class Web3Service {
   private simulatedTradeCounter: number = 101;
 
   constructor() {
+    this.loadSimulatedTrades();
+  }
+
+  private loadSimulatedTrades(): void {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const saved = localStorage.getItem('quantlab_simulated_trades');
+        if (saved) {
+          const list: TradeRecord[] = JSON.parse(saved);
+          list.forEach((t) => this.simulatedTrades.set(t.id, t));
+          this.simulatedTradeCounter = Math.max(101, ...list.map((t) => t.id));
+          return;
+        }
+      }
+    } catch {
+      // Fallback to in-memory seeding
+    }
     this.seedSimulatedTrades();
+  }
+
+  private saveSimulatedTrades(): void {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const list = Array.from(this.simulatedTrades.values());
+        localStorage.setItem('quantlab_simulated_trades', JSON.stringify(list));
+      }
+    } catch {
+      // Ignore storage errors in restricted iframe
+    }
   }
 
   private seedSimulatedTrades() {
@@ -109,6 +137,7 @@ class Web3Service {
       isClosed: true,
       status: 'VERIFIED',
     });
+    this.saveSimulatedTrades();
   }
 
   /**
@@ -216,6 +245,7 @@ class Web3Service {
       isClosed: false,
       status: 'OPEN',
     });
+    this.saveSimulatedTrades();
 
     return { hash: mockHash, tradeId };
   }
@@ -247,6 +277,7 @@ class Web3Service {
       trade.isClosed = true;
       trade.status = 'CLOSED';
       const pnl = (exitPrice - trade.entryPrice) * trade.quantity;
+      this.saveSimulatedTrades();
       return { hash: mockHash, profitLoss: pnl };
     }
     return { hash: mockHash, profitLoss: 0 };
