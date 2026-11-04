@@ -460,7 +460,7 @@ async def get_ai_assistant_response(
         provider_display = {"gemini": "Google Gemini", "groq": "Groq Cloud", "openai": "OpenAI"}.get(provider_choice, provider_choice)
         return {
             "response": f"**Configuration Notice**: **{provider_display}** was selected, but no API key was provided. "
-                        f"Please click **'AI Model Key'** in the top-right corner to enter your API key, or switch to 'Auto Detect / Offline Engine'.",
+                        f"Please set your API key in `backend/.env` (e.g. GEMINI_API_KEY, GROQ_API_KEY, or OPENAI_API_KEY) or use the built-in QuantLab Quantitative Engine.",
             "technical_summary": None,
             "provider": provider_choice,
             "error": "Missing API key for selected provider",

@@ -150,8 +150,7 @@ const FormattedMessage: React.FC<{ content: string }> = ({ content }) => {
               if (!trimmed) return <div key={idx} className="h-1" />;
               if (trimmed.startsWith('## ')) {
                 return (
-                  <h2 key={idx} className={`text-base font-bold mt-2 mb-1 flex items-center gap-2 ${isDark ? "text-white" : "text-[#0F172A]"}`}>
-                    <Bot size={18} className="text-[#3B82F6]" />
+                  <h2 key={idx} className={`text-base font-bold mt-2 mb-1 ${isDark ? "text-white" : "text-[#0F172A]"}`}>
                     {trimmed.replace(/^##\s+/, '')}
                   </h2>
                 );
@@ -189,16 +188,31 @@ const formatMsgTime = (): string =>
 const getWelcomeMessage = (): Message => ({
   id: 'welcome',
   role: 'assistant',
-  content: `## QuantLab Universal Quantitative AI Assistant
-Hello! I am your AI Quantitative Analyst and Trading Assistant. Ask me **anything** about:
+  content: `## Welcome to QuantLab! 👋
+Your next trading insight starts here.
 
-- **Algorithmic Trading**: SMA crossovers, RSI mean reversion, Bollinger bands, MACD.
-- **Quantitative Mathematics**: Sharpe, Sortino, Calmar ratios, Kelly criterion, drawdown formulas.
-- **Options & Greeks**: Delta, Gamma, Theta, Vega, straddles, iron condors, Black-Scholes.
-- **Live Stock Technicals & Backtests**: Real-time regime diagnostics on Indian equities.`,
+I'm your AI Quantitative Analyst, ready to help you explore markets, analyze strategies, and uncover data-driven opportunities.
+
+What would you like to discover today?`,
   timestamp: formatMsgTime(),
   provider: 'quantlab_engine',
 });
+
+const isOldWelcome = (msg?: Message): boolean => {
+  if (!msg) return false;
+  if (msg.id === 'welcome' || msg.id === 'init' || msg.id === 'reset') {
+    if (typeof msg.content === 'string') {
+      if (
+        msg.content.includes('QuantLab Universal Quantitative AI Assistant') ||
+        msg.content.includes('Hello! I am your AI Quantitative Analyst') ||
+        msg.content.includes('Conversation cleared')
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
 
 export const AIAssistant: React.FC = () => {
   const { resolvedTheme } = useTheme();
@@ -210,7 +224,21 @@ export const AIAssistant: React.FC = () => {
       const saved = sessionStorage.getItem(key);
       if (saved) {
         try {
-          return JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            let changed = false;
+            const updated = parsed.map((m, idx) => {
+              if (idx === 0 && isOldWelcome(m)) {
+                changed = true;
+                return getWelcomeMessage();
+              }
+              return m;
+            });
+            if (changed) {
+              sessionStorage.setItem(key, JSON.stringify(updated));
+            }
+            return updated;
+          }
         } catch {
           // fallback
         }
@@ -250,7 +278,22 @@ export const AIAssistant: React.FC = () => {
       const saved = sessionStorage.getItem(chatKey);
       if (saved) {
         try {
-          setMessages(JSON.parse(saved));
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            let changed = false;
+            const updated = parsed.map((m, idx) => {
+              if (idx === 0 && isOldWelcome(m)) {
+                changed = true;
+                return getWelcomeMessage();
+              }
+              return m;
+            });
+            if (changed) {
+              sessionStorage.setItem(chatKey, JSON.stringify(updated));
+            }
+            setMessages(updated);
+            return;
+          }
         } catch {
           setMessages([getWelcomeMessage()]);
         }
@@ -290,13 +333,7 @@ export const AIAssistant: React.FC = () => {
 
   const handleClearChat = () => {
     if (confirm('Clear entire conversation history?')) {
-      const resetMsg: Message = {
-        id: 'reset',
-        role: 'assistant',
-        content: `Conversation cleared. Ask me any question about quantitative trading, mathematical finance, options, or live Indian market technicals!`,
-        timestamp: formatMsgTime(),
-        provider: 'quantlab_engine',
-      };
+      const resetMsg: Message = getWelcomeMessage();
       setMessages([resetMsg]);
       const key = `quantlab_ai_chat_history_${getActiveUserKey()}`;
       sessionStorage.removeItem(key);

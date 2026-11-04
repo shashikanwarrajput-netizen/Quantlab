@@ -388,30 +388,23 @@ def backtest_strategy(df: pd.DataFrame, initial_capital: float = 100000.0):
 
     # 12. Friendly Greeting / Introduction
     if re.search(r'^(hi|hello|hey|greetings|who are you|help)\b', q):
-        return f"""### Welcome to QuantLab AI Assistant
+        return f"""Welcome to QuantLab! 👋
+Your next trading insight starts here.
 
-I am your quantitative analytics and trading copilot. I can assist with:
-- **Technical & Algorithmic Analysis**: Evaluate moving averages, RSI, and Bollinger bands on **{sym}**.
-- **Financial Engineering**: Option Greeks, portfolio risk ratios, and backtest diagnostics.
-- **Python Code Generation**: Vectorized trading scripts and algorithmic implementations.
-- **General Technical Knowledge**: Science, cybersecurity, mathematics, and programming.
+I'm your AI Quantitative Analyst, ready to help you explore markets, analyze strategies, and uncover data-driven opportunities.
 
-*Try asking: "Explain RSI in trading", "Calculate 15% of 20,000", or "What is Python?"*"""
+What would you like to discover today?"""
 
     # 13. Transparent, Honest Offline Fallback
-    return f"""### ℹ️ QuantLab Offline Knowledge Mode
+    return f"""### ℹ️ QuantLab Quantitative Analysis
 
-I am currently running in **QuantLab Offline Knowledge Engine** mode. I have direct built-in knowledge for:
+I am currently operating using the built-in **QuantLab Quantitative Knowledge Engine**. I have full algorithmic analysis ready for:
 - **Quantitative Trading & Algorithms** (SMA, RSI, Bollinger Bands, MACD)
 - **Risk Metrics** (Sharpe, Sortino, Drawdown, Kelly Criterion)
 - **Options & Derivatives** (Greeks, Straddles, Iron Condor)
-- **Python Programming & Code Generation**
 - **Indian Market Data & Taxation** (STCG, LTCG, STT, NSE rules)
 - **Mathematical Calculations** (e.g. "Calculate 15% of 20,000")
 
-Your query *"**{query}**"* requires full generative reasoning beyond this offline rule base.
+Your query *"**{query}**"* requires full generative conversational reasoning.
 
-**To enable full generative conversational AI:**
-1. Click the **"AI Model Key"** button in the header above.
-2. Enter a free API key from **Google Gemini** (get one at [aistudio.google.com](https://aistudio.google.com)) or **Groq** ([console.groq.com](https://console.groq.com)).
-3. Click **"Save & Apply"** to activate full conversational intelligence on any topic!"""
+To enable live generative LLM responses across any topic, set a free `GEMINI_API_KEY` ([aistudio.google.com](https://aistudio.google.com)) or `GROQ_API_KEY` ([console.groq.com](https://console.groq.com)) in your `backend/.env` file."""
