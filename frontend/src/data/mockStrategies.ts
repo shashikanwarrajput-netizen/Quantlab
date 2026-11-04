@@ -1,0 +1,83 @@
+import type { Strategy } from '../types';
+
+export const mockStrategies: Strategy[] = [
+  {
+    id: '1',
+    name: 'Moving Average Crossover',
+    description: 'Buy when SMA(50) > SMA(200), sell on reversal',
+    asset: 'RELIANCE',
+    market: 'NSE',
+    timeframe: 'Daily',
+    indicators: [
+      { type: 'SMA', period: 50 },
+      { type: 'SMA', period: 200 },
+    ],
+    entryRules: [],
+    exitRules: [],
+    stopLoss: 2,
+    takeProfit: 5,
+    positionSize: 100,
+    createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    updatedAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+  },
+  {
+    id: '2',
+    name: 'RSI Momentum',
+    description: 'Exploit overbought/oversold conditions with RSI',
+    asset: 'TCS',
+    market: 'NSE',
+    timeframe: 'Hourly',
+    indicators: [
+      { type: 'RSI', period: 14 },
+    ],
+    entryRules: [],
+    exitRules: [],
+    stopLoss: 1.5,
+    takeProfit: 3,
+    positionSize: 50,
+    createdAt: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+    updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+  },
+  {
+    id: '3',
+    name: 'MACD Trend Strategy',
+    description: 'Follow trends using MACD crossovers',
+    asset: 'INFY',
+    market: 'NSE',
+    timeframe: '4H',
+    indicators: [
+      { type: 'MACD' },
+    ],
+    entryRules: [],
+    exitRules: [],
+    stopLoss: 3,
+    takeProfit: 6,
+    positionSize: 75,
+    createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+    updatedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+  },
+  {
+    id: '4',
+    name: 'Mean Reversion',
+    description: 'Trade reversions to mean using Bollinger Bands',
+    asset: 'HDFCBANK',
+    market: 'NSE',
+    timeframe: 'Daily',
+    indicators: [
+      { type: 'BOLLINGER', period: 20 },
+    ],
+    entryRules: [],
+    exitRules: [],
+    stopLoss: 2.5,
+    takeProfit: 4,
+    positionSize: 100,
+    createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    updatedAt: new Date(),
+  },
+];
+
+export const mockBacktestStats = {
+  totalRuns: 23,
+  bestReturn: 45.2,
+  averageWinRate: 58.3,
+};

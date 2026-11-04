@@ -1,0 +1,75 @@
+<svg viewBox="0 0 768 768" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark background -->
+  <rect width="768" height="768" fill="#0a0a1a" rx="50"/>
+  
+  <!-- Gradient circle background -->
+  <defs>
+    <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d946ef;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer circle -->
+  <circle cx="384" cy="384" r="320" fill="none" stroke="url(#circleGradient)" stroke-width="60" opacity="0.8"/>
+  
+  <!-- Brain icon (left side) -->
+  <g transform="translate(200, 300)">
+    <!-- Brain outline -->
+    <path d="M 50 20 Q 60 15 70 20 Q 75 30 70 40 L 50 50 L 30 40 Q 25 30 30 20 Z" fill="none" stroke="#d946ef" stroke-width="2.5"/>
+    <circle cx="50" cy="25" r="3" fill="#d946ef"/>
+    <circle cx="65" cy="30" r="3" fill="#d946ef"/>
+    <circle cx="35" cy="30" r="3" fill="#d946ef"/>
+    <circle cx="50" cy="40" r="2.5" fill="#d946ef"/>
+    <!-- Circuit lines -->
+    <line x1="50" y1="25" x2="65" y2="30" stroke="#06b6d4" stroke-width="1.5"/>
+    <line x1="50" y1="25" x2="35" y2="30" stroke="#06b6d4" stroke-width="1.5"/>
+    <line x1="65" y1="30" x2="50" y2="40" stroke="#06b6d4" stroke-width="1.5"/>
+    <line x1="35" y1="30" x2="50" y2="40" stroke="#06b6d4" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Candlestick chart (right side) -->
+  <g transform="translate(300, 280)">
+    <!-- Candle 1 -->
+    <line x1="10" y1="20" x2="10" y2="50" stroke="#a855f7" stroke-width="2"/>
+    <rect x="5" y="30" width="10" height="15" fill="#a855f7"/>
+    
+    <!-- Candle 2 -->
+    <line x1="30" y1="15" x2="30" y2="45" stroke="#9333ea" stroke-width="2"/>
+    <rect x="25" y="25" width="10" height="15" fill="#9333ea"/>
+    
+    <!-- Candle 3 -->
+    <line x1="50" y1="25" x2="50" y2="55" stroke="#7e22ce" stroke-width="2"/>
+    <rect x="45" y="35" width="10" height="15" fill="#7e22ce"/>
+    
+    <!-- Candle 4 -->
+    <line x1="70" y1="10" x2="70" y2="40" stroke="#06b6d4" stroke-width="2"/>
+    <rect x="65" y="20" width="10" height="15" fill="#06b6d4"/>
+    
+    <!-- Trend line -->
+    <polyline points="10,35 30,30 50,40 70,25" stroke="#06b6d4" stroke-width="2.5" fill="none"/>
+  </g>
+  
+  <!-- Uptrend arrow -->
+  <g transform="translate(420, 350)">
+    <line x1="0" y1="50" x2="50" y2="0" stroke="#06b6d4" stroke-width="3"/>
+    <polygon points="50,0 45,12 58,7" fill="#06b6d4"/>
+  </g>
+  
+  <!-- Decorative stars -->
+  <g fill="#d946ef">
+    <polygon points="550,80 555,95 571,95 559,105 564,120 550,110 536,120 541,105 529,95 545,95" />
+  </g>
+  <g fill="#06b6d4">
+    <polygon points="620,140 623,150 634,150 625,157 628,167 620,160 612,167 615,157 606,150 617,150" />
+  </g>
+  
+  <!-- Text -->
+  <text x="384" y="550" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" fill="white">
+    <tspan>QUANTA</tspan><tspan fill="#06b6d4">LAB</tspan>
+  </text>
+  
+  <text x="384" y="610" font-family="Arial, sans-serif" font-size="28" text-anchor="middle" fill="#d946ef" letter-spacing="4">
+    AI • ANALYZE • OPTIMIZE
+  </text>
+</svg>
